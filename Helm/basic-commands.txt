@@ -1,0 +1,17 @@
+#Instalação inicial
+helm install meu-ingress-controller ingress-nginx/ingress-nginx
+
+#Verificar histórico do helm
+helm history meu-ingress-controller -n nginx-ingress
+
+#Fazer o rollback das alterações
+helm rollback  meu-ingress-controller -n nginx-ingress
+
+#listar charts
+helm list
+
+#aumentar número de réplicas
+helm upgrade meu-ingress-controller ingress-nginx/ingress-nginx --namespace nginx-ingress --set controller.replicaCount=2
+
+#atualizar por meio do arquivo values.yml
+helm upgrade meu-ingress-controller ingress-nginx/ingress-nginx --namespace nginx-ingress --values values.yml
