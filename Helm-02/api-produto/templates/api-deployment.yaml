@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-api-deployment
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-api
+  template: 
+    metadata:          
+      labels:
+        app: {{ .Release.Name }}-api
+    spec:            
+      containers:
+      - name: api
+        image: {{ .Values.api.image}}
+        ports:
+        - containerPort: 80
+        imagePullPolicy: Always
+        # resources:
+        #   requests:
+        #     cpu: "500m"
+        #     memory: "500mi"
+        #   limits:
+        #     cpu: "500m"
+        #     memory: "500m"
+        envFrom:
+          - configMapRef:
+              name: {{ .Release.Name }}-api-configmap
+        env:
+          - name: Mongo__User
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_USERNAME
+                name: {{ .Release.Name }}-mongodb-secret
+          - name: Mongo__Password
+            valueFrom:
+              secretKeyRef:
+                key: MONGO_INITDB_ROOT_PASSWORD
+                name: {{ .Release.Name }}-mongodb-secret

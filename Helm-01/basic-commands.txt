@@ -15,3 +15,9 @@ helm upgrade meu-ingress-controller ingress-nginx/ingress-nginx --namespace ngin
 
 #atualizar por meio do arquivo values.yml
 helm upgrade meu-ingress-controller ingress-nginx/ingress-nginx --namespace nginx-ingress --values values.yml
+
+#subir manifestos configurados no padrão chart
+helm install minhaapi api-produto/
+
+#Desinstalar todos os recursos
+helm uninstall minhaapi api-produto/
